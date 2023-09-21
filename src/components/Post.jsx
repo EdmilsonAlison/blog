@@ -18,11 +18,18 @@ export const Post = (props) => {
     function handlerCreateNewComment() {
         event.preventDefault();
         setComments([...comments, newCommentText])
+        setNewCommentText('')
     }
 
-    function handleNewCommentChange(){
+    function handleNewCommentChange() {
         setNewCommentText(event.target.value)
-        setNewCommentText('')
+    }
+
+    function deleteComment(commentToDelete) {
+        const commentsWithoutDeletedOne = comments.filter(comment => {
+            return comment !== commentToDelete
+        })
+        setComments(commentsWithoutDeletedOne)
     }
 
     const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
@@ -50,7 +57,7 @@ export const Post = (props) => {
                     if (line.type === 'paragraph') {
                         return <p key={line.content}>{line.content}</p>
                     } else if (line.type === 'link') {
-                        return <p key={uuidv4()} ><a href={'#'}>{line.content}</a></p>
+                        return <p key={uuidv4()}><a href={'#'}>{line.content}</a></p>
                     }
                 })}
             </div>
@@ -70,7 +77,11 @@ export const Post = (props) => {
 
             <div className={styles.commentList}>
                 {comments.map(comment => {
-                    return <Comment key={comment}  content={comment}/>
+                    return <Comment
+                        key={comment}
+                        content={comment}
+                        deleteComment={deleteComment}
+                    />
                 })}
             </div>
         </article>
