@@ -1,4 +1,4 @@
-import {format, formatDistanceToNow} from 'date-fns'
+ import {format, formatDistanceToNow} from 'date-fns'
 import {ptBR} from 'date-fns/locale'
 import {v4 as uuidv4} from 'uuid'
 
@@ -42,6 +42,8 @@ export const Post = (props) => {
         addSuffix: true
     })
 
+    const isNewCommentEmpty = newCommentText.length === 0;
+
     return (
         <article className={styles.post}>
             <header>
@@ -78,7 +80,7 @@ export const Post = (props) => {
                     required
                 />
                 <footer>
-                    <button type={"submit"}>Publicar</button>
+                    <button type={"submit"} disabled={isNewCommentEmpty}>Publicar</button>
                 </footer>
             </form>
 
