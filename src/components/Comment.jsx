@@ -13,7 +13,9 @@ export const Comment = (props) => {
 
 
     function handleLikeComment(){
-        setLikeCount(likeCount +1)
+        setLikeCount((state) => {
+            return state +1;
+        })
     }
 
     return (
